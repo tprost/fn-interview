@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users  = require('./routes/users');
 
+var http = require('http');
+
 var app = express();
 
 // view engine setup
@@ -21,6 +23,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+require('./config/express')(app);
+
+// require('./config/sequelize');
+
+var config = require('./config');
+
+
 
 app.use('/', routes);
 app.use('/users', users);
@@ -42,5 +53,11 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+var server = http.createServer(app);
+
+server.listen(config.port, function(){
+  console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
+});
 
 module.exports = app;
