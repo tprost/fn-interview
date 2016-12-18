@@ -7,23 +7,21 @@ var expressNunjucks = require('express-nunjucks');
 
 var app = express();
 
+// some config
 require('./config/express')(app);
-
 var config = require('./config');
 
+// views
+app.locals.js = require('./config/public.js').js();
 const isDev = app.get('env') === 'development';
-
 app.set('views', __dirname + '/views');
-
 const njk = expressNunjucks(app, {
     watch: isDev,
     noCache: isDev
 });
-
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'nunjucks');
 
+// routes
 app.use('/', routes);
 app.use('/users', users);
 
@@ -43,9 +41,6 @@ app.use(function(err, req, res, next) {
     error: (app.get('env') === 'development') ? err : {}
   });
 });
-
-app.locals.js = require('./config/public.js').js();
-app.locals.test = "asdasd";
 
 var server = http.createServer(app);
 

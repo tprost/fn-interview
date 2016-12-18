@@ -1,44 +1,45 @@
 'use strict';
+
 var path = require('path');
 var gulp = require('gulp');
-
 var browserSync = require('browser-sync');
-
 var nodemon = require('gulp-nodemon');
 var browserSyncSpa = require('browser-sync-spa');
 var util = require('util');
 var server = require( 'gulp-develop-server' );
+var gutil = require('gulp-util');
 
 var BROWSER_SYNC_RELOAD_DELAY = 1000;
 
-
-var gutil = require('gulp-util');
-
-var conf = {};
-conf.paths = {
-  src: 'public',
-  dist: 'dist',
-  tmp: '.tmp',
-  e2e: 'e2e'
+var conf = {
+  paths: {
+    src: 'public',
+    dist: 'dist',
+    tmp: '.tmp',
+    e2e: 'e2e'
+  },
+  wiredep: {
+    exclude: [/jquery/, /bootstrap.js$/],
+    directory: 'public/bower_components'
+  },
+  errorHandler: function(title) {
+    'use strict';
+    return function(err) {
+      gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
+      this.emit('end');
+    };
+  }
 };
 
-conf.wiredep = {
-  exclude: [/jquery/, /bootstrap.js$/],
-  directory: 'public/bower_components'
-};
+browserSync.use(browserSyncSpa({
+  selector: '[ng-app]'
+}));
 
-conf.errorHandler = function(title) {
-  'use strict';
+function isOnlyChange(event) {
+  return event.type === 'changed';
+}
 
-  return function(err) {
-    gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
-    this.emit('end');
-  };
-};
-
-
-
-gulp.task('nodemon', function (cb) {
+gulp.task('nodemon', function(cb) {
   var called = false;
   return nodemon({
     script: 'app.js',
@@ -54,14 +55,13 @@ gulp.task('nodemon', function (cb) {
       called = true;
       cb();
     }
-  })
-    .on('restart', function onRestart() {
-      setTimeout(function()  {
-        browserSync.reload({
-          stream: false
-        });
-      }, BROWSER_SYNC_RELOAD_DELAY);
-    })
+  }).on('restart', function onRestart() {
+    setTimeout(function()  {
+      browserSync.reload({
+        stream: false
+      });
+    }, BROWSER_SYNC_RELOAD_DELAY);
+  });
 });
 
 gulp.task('browser-sync', ['nodemon'], function () {
@@ -93,12 +93,6 @@ gulp.task('prod-test-server', function() {
   });
 });
 
-
-browserSync.use(browserSyncSpa({
-  selector: '[ng-app]'
-}));
-
-//Temporary use .start() until gulp 4.0
 gulp.task('serve', ['watch'], function () {
   gulp.start('browser-sync');
 });
@@ -114,11 +108,6 @@ gulp.task('serve:e2e', ['inject'], function () {
 gulp.task('serve:e2e-dist', ['build'], function () {
   gulp.start('prod-test-server');
 });
-
-
-function isOnlyChange(event) {
-  return event.type === 'changed';
-}
 
 gulp.task('watch', ['inject'], function () {
 
@@ -148,8 +137,10 @@ gulp.task('watch', ['inject'], function () {
   });
 });
 
+gulp.task('default', function() {
 
-gulp.task('default', function(){});
+});
+
 // gulp.task('inject', function(){});
 // // gulp.task('default', ['clean'], function () {
 // //   gulp.start('build');
@@ -189,4 +180,18 @@ gulp.task('inject', [], function () {
   //   .pipe($.inject(injectScripts, injectOptions))
   //   .pipe(wiredep(_.extend({}, conf.wiredep)))
   //   .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve')));
+});
+
+gulp.task('tests:unit:backend', function() {
+  const mocha = require('gulp-mocha');
+  gulp.src('tests/unit/**/*.js', {read: false})
+    .pipe(mocha({reporter: 'nyan'}));
+});
+
+gulp.task('tests:unit:frontend', function(done) {
+  var Server = require('karma').Server;
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
 });
