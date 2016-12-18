@@ -1,13 +1,12 @@
 // Karma configuration
 // Generated on Sat Dec 17 2016 22:18:11 GMT-0500 (EST)
 
-var publicConfig = require('./config/public.js');
+var globs = require('./config/public.js').globs();
 var _ = require('lodash');
 var files = _.union(
-  _.toArray(publicConfig.lib),
-  _.toArray(publicConfig.app),
-  _.toArray(publicConfig.tests));
-console.log(files);
+  _.toArray(globs.lib),
+  _.toArray(globs.app),
+  _.toArray(globs.tests));
 
 module.exports = function(config) {
   config.set({

@@ -13,7 +13,7 @@ function requiredProcessEnv(name) {
 var all = {
   env: process.env.NODE_ENV,
 
-  root: path.normalize(__dirname + '/../../..'),
+  root: path.normalize(__dirname + '/..'),
 
   port: process.env.PORT || 3000
 

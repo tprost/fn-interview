@@ -12,7 +12,8 @@
   <body ng-app="app">
     <div ng-view></div>
     <p>testsets</p>
-    <script type="text/javascript" src="/lib/angular/angular.js"></script>
-    <script type="text/javascript" src="/js/app.module.js"></script>
+    {% for path in js %}
+    <script type="text/javascript" src="{{ path }}"></script>
+    {% endfor %}
   </body>
 </html>

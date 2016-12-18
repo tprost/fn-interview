@@ -1,26 +1,13 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-
 var routes = require('./routes/index');
 var users  = require('./routes/users');
-
 var http = require('http');
-
-const expressNunjucks = require('express-nunjucks');
-
+var expressNunjucks = require('express-nunjucks');
 
 var app = express();
 
-
-
-
 require('./config/express')(app);
-
-// require('./config/sequelize');
 
 var config = require('./config');
 
@@ -57,6 +44,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+app.locals.js = require('./config/public.js').js();
+app.locals.test = "asdasd";
 
 var server = http.createServer(app);
 

@@ -31,8 +31,7 @@ module.exports = function(app) {
     // app.use(express.static(path.join(config.root, '.tmp/serve')));
     // app.use(express.static(path.join(config.root, 'public')));
     app.use(express.static(path.join(config.root, 'dist')));
-    app.use('/js', express.static(path.join(config.root, 'public/js')));
-    app.use('/lib', express.static(path.join(config.root, 'public/lib')));
+    app.use('/public', express.static(path.join(config.root, 'public')));
     // app.use(morgan('dev'));
     // app.use(errorHandler());
   }
