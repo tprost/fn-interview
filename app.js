@@ -10,19 +10,12 @@ var users  = require('./routes/users');
 
 var http = require('http');
 
+const expressNunjucks = require('express-nunjucks');
+
+
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 
 require('./config/express')(app);
@@ -31,7 +24,18 @@ require('./config/express')(app);
 
 var config = require('./config');
 
+const isDev = app.get('env') === 'development';
 
+app.set('views', __dirname + '/views');
+
+const njk = expressNunjucks(app, {
+    watch: isDev,
+    noCache: isDev
+});
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'nunjucks');
 
 app.use('/', routes);
 app.use('/users', users);

@@ -122,14 +122,16 @@ function isOnlyChange(event) {
 
 gulp.task('watch', ['inject'], function () {
 
-  gulp.watch([path.join(conf.paths.src, '/*.html'), 'bower.json'], ['inject']);
+  //   gulp.watch([path.join(conf.paths.src, '/*.html'), 'bower.json'], ['inject']);
 
-  gulp.watch(path.join(conf.paths.src, '**/*.css'), function(event) {
+  gulp.watch(path.join(conf.paths.src, '/css/**/*.css'), function(event) {
+
+    gulp.start('inject');
     if(isOnlyChange(event)) {
       browserSync.reload(event.path);
-    } else {
-      gulp.start('inject');
     }
+
+
   });
 
   gulp.watch(path.join(conf.paths.src, '**/*.js'), function(event) {
@@ -147,7 +149,40 @@ gulp.task('watch', ['inject'], function () {
 
 
 gulp.task('default', function(){});
-gulp.task('inject', function(){});
-// gulp.task('default', ['clean'], function () {
-//   gulp.start('build');
-// });
+// gulp.task('inject', function(){});
+// // gulp.task('default', ['clean'], function () {
+// //   gulp.start('build');
+// // });
+
+//
+gulp.task('inject', [], function () {
+
+  gulp.src(path.join(conf.paths.src, '/css/**/*.css'))
+    .pipe(gulp.dest(path.join(conf.paths.dist, '/css')));
+
+  // gulp.src(path.join(conf.paths.src, '/js/**/*.js'))
+  //   .pipe(gulp.dest(path.join(conf.paths.dist, '/js')));
+
+  // var injectStyles = gulp.src([
+  //   path.join(conf.paths.src, '/assets/css/*.css')
+  // ], { read: false });
+
+  // var injectScripts = gulp.src([
+  //   path.join(conf.paths.src, '/app/**/*.module.js'),
+  //   path.join(conf.paths.src, '/app/**/*.js'),
+  //   path.join('!' + conf.paths.src, '/app/**/*.spec.js'),
+  //   path.join('!' + conf.paths.src, '/app/**/*.mock.js')
+  // ])
+  // .pipe($.angularFilesort()).on('error', conf.errorHandler('AngularFilesort'));
+
+  // var injectOptions = {
+  //   ignorePath: [conf.paths.src, path.join(conf.paths.tmp, '/serve')],
+  //   addRootSlash: false
+  // };
+
+  // return gulp.src(path.join(conf.paths.src, '/*.html'))
+  //   .pipe($.inject(injectStyles, injectOptions))
+  //   .pipe($.inject(injectScripts, injectOptions))
+  //   .pipe(wiredep(_.extend({}, conf.wiredep)))
+  //   .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve')));
+});

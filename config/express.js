@@ -9,6 +9,7 @@ var express = require('express');
 // var cookieParser = require('cookie-parser');
 // var errorHandler = require('errorhandler');
 var path = require('path');
+var config = require('./index.js');
 
 module.exports = function(app) {
   // app.use(compression());
@@ -19,15 +20,19 @@ module.exports = function(app) {
 
   var env = app.get('env');
 
-  if ('production' === env) {
+  if ('production' === env || 'test' === env) {
     // app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
-    // app.use(express.static(path.join(config.root, 'dist')));
+ app.use(express.static(path.join(config.root, 'dist')));
+
   }
 
-  if ('development' === env || 'test' === env) {
+  if ('development' === env) {
     // app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
     // app.use(express.static(path.join(config.root, '.tmp/serve')));
     // app.use(express.static(path.join(config.root, 'public')));
+    app.use(express.static(path.join(config.root, 'dist')));
+    app.use('/js', express.static(path.join(config.root, 'public/js')));
+    app.use('/lib', express.static(path.join(config.root, 'public/lib')));
     // app.use(morgan('dev'));
     // app.use(errorHandler());
   }
