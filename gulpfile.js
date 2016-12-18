@@ -136,13 +136,14 @@ gulp.task('watch', ['inject'], function () {
 
   gulp.watch(path.join(conf.paths.src, '**/*.js'), function(event) {
     if(isOnlyChange(event)) {
-      gulp.start('scripts');
+      // gulp.start('scripts');
     } else {
       gulp.start('inject');
     }
   });
 
-  gulp.watch(path.join(conf.paths.src, '**/*.html'), function(event) {
+  gulp.watch(path.join(conf.paths.src, '/templates/**/*.html'), function(event) {
+    gulp.start('inject');
     browserSync.reload(event.path);
   });
 });
@@ -159,6 +160,9 @@ gulp.task('inject', [], function () {
 
   gulp.src(path.join(conf.paths.src, '/css/**/*.css'))
     .pipe(gulp.dest(path.join(conf.paths.dist, '/css')));
+
+  gulp.src(path.join(conf.paths.src, '/templates/**/*.html'))
+    .pipe(gulp.dest(path.join(conf.paths.dist, '/templates')));
 
   // gulp.src(path.join(conf.paths.src, '/js/**/*.js'))
   //   .pipe(gulp.dest(path.join(conf.paths.dist, '/js')));
