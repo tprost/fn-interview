@@ -1,0 +1,25 @@
+{
+  "name": "express-example",
+  "description": "",
+  "main": "",
+  "authors": [
+    "tprost <tprost@users.noreply.github.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/tprost/sean-boilerplate",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.6.1",
+    "angular-mocks": "~1.6.1",
+    "angular-route": "~1.6.1"
+  }
+}

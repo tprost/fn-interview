@@ -1,6 +1,6 @@
 var path = require('path')
 
 module.exports = {
-  'config':          path.resolve('models', 'config', 'config.js'),
-  'migrations-path': path.resolve('models', 'migrations')
+  'config':          path.resolve('app', 'models', 'config', 'config.js'),
+  'migrations-path': path.resolve('app', 'models', 'migrations')
 }

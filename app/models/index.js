@@ -21,9 +21,11 @@ fs.readdirSync(__dirname)
     return (file.indexOf(".") !== 0)
       && (file !== "index.js")
       && (file !== "config")
-      && (file !== "migrations");
+      && (file !== "migrations")
+      && (file.indexOf(".spec.js") === -1);
   })
   .forEach(function(file) {
+
     var model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
   });

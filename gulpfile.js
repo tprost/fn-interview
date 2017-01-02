@@ -145,8 +145,8 @@ gulp.task('default', function() {
 // // gulp.task('default', ['clean'], function () {
 // //   gulp.start('build');
 // // });
-
 //
+
 gulp.task('inject', [], function () {
 
   gulp.src(path.join(conf.paths.src, '/css/**/*.css'))
@@ -183,8 +183,9 @@ gulp.task('inject', [], function () {
 });
 
 gulp.task('tests:unit:backend', function() {
+  process.env.NODE_ENV = "test";
   const mocha = require('gulp-mocha');
-  gulp.src('tests/unit/**/*.js', {read: false})
+  gulp.src('app/**/*.spec.js', {read: false})
     .pipe(mocha({reporter: 'nyan'}));
 });
 
@@ -194,4 +195,13 @@ gulp.task('tests:unit:frontend', function(done) {
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
   }, done).start();
+});
+
+gulp.task('tests:unit', ['tests:unit:backend', 'tests:unit:frontend'], function() {
+
+
+});
+
+gulp.task('tests', ['tests:unit'], function() {
+
 });
