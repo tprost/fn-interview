@@ -77,6 +77,7 @@ gulp.task('test-server', function() {
   server.listen({
     path: './app.js',
     env: {
+      PORT: 5678,
       NODE_ENV: 'test',
       SEED: 'seed'
     }
@@ -204,4 +205,20 @@ gulp.task('tests:unit', ['tests:unit:backend', 'tests:unit:frontend'], function(
 
 gulp.task('tests', ['tests:unit'], function() {
 
+});
+
+
+gulp.task('test:e2e', ['test-server'], function () {
+  var nightwatch = require('nightwatch');
+  nightwatch.runner({
+    config: 'nightwatch.json',
+    env: 'default'
+  }, function (passed) {
+    if (passed) {
+      process.exit();
+    }
+    else {
+      process.exit(1);
+    }
+  });
 });
