@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var routes = require('./app/routes/index');
+
 var http = require('http');
 var expressNunjucks = require('express-nunjucks');
 
@@ -21,10 +21,12 @@ const njk = expressNunjucks(app, {
     noCache: isDev
 });
 
+var home = require('./app/routes/home');
+var users = require('./app/routes/users');
+
 // routes
-app.use('/', routes.home);
-app.use('/index.html', routes.home);
-app.use('/users', routes.users);
+app.use('/', home);
+app.use('/users', users);
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {

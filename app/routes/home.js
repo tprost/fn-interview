@@ -1,16 +1,9 @@
-var models  = require('../models');
+var controller = require('../controllers/home.js');
+
 var express = require('express');
 var router  = express.Router();
 
-router.get('/', function(req, res) {
-  models.User.findAll({
-
-  }).then(function(users) {
-    res.render('index', {
-      title: 'Sequelize: Express Example',
-      users: users
-    });
-  });
-});
+router.get('/', controller.home);
+router.get('/index.html', controller.home);
 
 module.exports = router;
