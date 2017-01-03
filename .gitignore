@@ -3,3 +3,5 @@ npm-debug.log
 *.sqlite
 public/lib
 dist
+*.log
+reports
