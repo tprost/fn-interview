@@ -3,8 +3,7 @@
 var passport = require('passport');
 var db = require('../models/index.js');
 
-exports.loginWithUsernameAndPassword =
-  passport.authenticate('local', {successRedirect: '/'});
+exports.login = passport.authenticate('local', {session: true, successRedirect: '/'});
 
 exports.signupWithUsernameAndPassword = function(req, res) {
   db.User.findOne({
@@ -36,8 +35,10 @@ exports.signupWithUsernameAndPassword = function(req, res) {
   });
 };
 
-exports.ensureAuthenticated = function(req, res) {
-  return passport.authenticate('local', { successRedirect: '/',
-                                          failureRedirect: '/login',
-                                          failureFlash: true });
+exports.logout = function(req, res) {
+  req.logout();
+  res.redirect('/');
 };
+
+exports.ensureAuthenticated =
+  passport.authenticate('local');

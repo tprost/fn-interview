@@ -10,6 +10,7 @@ var chai = require('chai');
 let chaiHttp = require('chai-http');
 let app = require('../app');
 let should = chai.should();
+let expect = chai.expect;
 
 chai.use(chaiHttp);
 
@@ -48,20 +49,57 @@ describe('Authentication', function() {
     });
 
     it('should work with the right credentials', function(done) {
-      chai.request(app)
+      var agent = chai.request.agent(app);
+      agent
         .post('/api/login')
         .send({
           username: "bob",
           password: "password"
         })
-        .end(function(err, res) {
+        .then(function(res) {
           res.should.have.status(200);
-          // res.body.should.be.a('array');
-          // res.body.length.should.be.eql(0);
-          done();
+          // expect(res).to.have.cookie('connect.sid');
+          return agent
+            .get('/api/me')
+            .then(function(res) {
+              res.should.have.status(200);
+              expect(res.body.username).to.equal("bob");
+              done();
+            })
+            .catch(function (err) {
+              done(err);
+            });
+        })
+        .catch(function (err) {
+          done(err);
         });
     });
 
+    it('logging out', function(done) {
+      var agent = chai.request.agent(app);
+      agent
+        .post('/api/login')
+        .send({
+          username: "bob",
+          password: "password"
+        })
+        .then(function(res) {
+          res.should.have.status(200);
+          return agent
+            .get('/api/logout')
+            .then(function(res) {
+              res.should.have.status(200);
+
+              done();
+            })
+            .catch(function (err) {
+              done(err);
+            });
+        })
+        .catch(function (err) {
+          done(err);
+        });
+    });
 
   });
 

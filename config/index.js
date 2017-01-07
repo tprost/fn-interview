@@ -15,7 +15,7 @@ var all = {
 
   root: path.normalize(__dirname + '/..'),
 
-  port: process.env.PORT || 3122
+  port: process.env.PORT || 3000
 
   // modelsDirectory : path.join(__dirname, '..', '..', 'models'),
 

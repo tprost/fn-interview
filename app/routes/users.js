@@ -4,10 +4,11 @@ var authentication = require('../controllers/authentication.controller.js');
 module.exports = function(app) {
   app.post('/api/signup', authentication.signupWithUsernameAndPassword);
 
-  app.post('/api/login', authentication.loginWithUsernameAndPassword);
+  app.post('/api/login', authentication.login);
 
-  app.route('/api/me')
-    .get(authentication.ensureAuthenticated, user.currentUser);
+  app.get('/api/logout', authentication.logout);
+
+  app.get('/api/me', user.currentUser);
 
   app.route('/api/me/profile')
     .put(authentication.ensureAuthenticated, user.updateUser)

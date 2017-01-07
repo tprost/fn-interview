@@ -21,8 +21,6 @@ const njk = expressNunjucks(app, {
     noCache: isDev
 });
 
-require ('./app/middleware/authentication.js');
-
 require('./app/routes/home')(app);
 require('./app/routes/users')(app);
 

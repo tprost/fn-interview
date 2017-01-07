@@ -6,8 +6,9 @@ var express = require('express');
 // var compression = require('compression');
 var bodyParser = require('body-parser');
 // var methodOverride = require('method-override');
-// var cookieParser = require('cookie-parser');
+var cookieParser = require('cookie-parser');
 // var errorHandler = require('errorhandler');
+var session = require('express-session');
 var passport = require('passport');
 var path = require('path');
 var config = require('./index.js');
@@ -16,10 +17,13 @@ module.exports = function(app) {
   // app.use(compression());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
+
+  require('../app/middleware/authentication.js');
+  app.use(session({ secret: 'nyan' }));
   app.use(passport.initialize());
   app.use(passport.session());
   // app.use(methodOverride());
-  // app.use(cookieParser());
+  app.use(cookieParser());
 
   var env = app.get('env');
 
@@ -35,6 +39,7 @@ module.exports = function(app) {
     // app.use(express.static(path.join(config.root, 'public')));
     app.use(express.static(path.join(config.root, 'dist')));
     app.use('/public', express.static(path.join(config.root, 'public')));
+    app.use('/', express.static(path.join(config.root, 'public')));
     // app.use(morgan('dev'));
     // app.use(errorHandler());
   }

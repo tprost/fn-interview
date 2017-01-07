@@ -2,20 +2,30 @@
 
 var _ = require('lodash');
 var path = require('path');
-var async = require('async');
 var request = require('request');
 
 var config = require('../models/config/config.js');
 var db = require('../models/index.js');
 
 exports.currentUser = function(req, res) {
-  db.User.findById(req.user).then(function(user) {
-    res.send(user);
-  }).catch(function(err) {
-    return res.status(401).send({
-      message: err
+  var user = req.user;
+  if (user) {
+    db.User.findOne({
+      where: {
+        id: user.dataValues.id
+      }
+    }).then(function(user, error) {
+      res.json(user.dataValues);
+    }).catch(function(err) {
+      return res.status(401).send({
+        message: err
+      });
     });
-  });
+  } else {
+    res.status(401).json({
+      message: "You have not been authorized."
+    });
+  }
 };
 
 exports.updateUser = function(req, res) {

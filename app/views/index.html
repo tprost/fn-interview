@@ -5,13 +5,21 @@
     <title>sean-boilerplate</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-
     <link rel="stylesheet" href="/css/stylesheet.css">
-
+    <link rel="stylesheet" href="/lib/semantic/dist/semantic.css">
   </head>
   <body ng-app="app">
-    <div ng-view></div>
+
     <p>testsets</p>
+    {% if user %}
+    <p>You're logged in!</p>
+    <button class="ui button fn-logout-button">Logout</button>
+    {% else %}
+    <div class="ui modalad">
+      <div class="fn-login-form"></div>
+    </div>
+    {% endif %}
+
     {% for path in js %}
     <script type="text/javascript" src="{{ path }}"></script>
     {% endfor %}

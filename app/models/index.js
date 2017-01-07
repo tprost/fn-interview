@@ -20,6 +20,7 @@ fs.readdirSync(__dirname)
   .filter(function(file) {
     return (file.indexOf(".") !== 0)
       && (file !== "index.js")
+      && (file !== "seed.js")
       && (file !== "config")
       && (file !== "migrations")
       && (file.indexOf(".spec.js") === -1);

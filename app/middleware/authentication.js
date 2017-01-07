@@ -22,12 +22,20 @@ passport.use(new LocalStrategy(
   }
 ));
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
+// Serialize sessions
+passport.serializeUser(function (user, done) {
+  done(null, user.dataValues.id);
 });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
+// Deserialize sessions
+passport.deserializeUser(function (id, done) {
+  db.User.find({
+    where: {
+      id: id
+    }
+  }).then(function (user, error) {
+    done(error, user);
+  });
 });
 
 // passport.use(new BearerStrategy(

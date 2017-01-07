@@ -1,13 +1,13 @@
-var models  = require('../models');
+var models = require('../models/index.js');
 var express = require('express');
 
 module.exports = {
   home: function (req, res) {
-    models.User.findAll().then(function(users) {
-      res.render('index', {
-        title: "blah",
-        users: users
-      });
+
+    res.render('index', {
+      title: "blah",
+      user: req.user,
+      bam: req.user ? "hello" : "goodbye"
     });
   }
 };
