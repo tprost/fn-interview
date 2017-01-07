@@ -208,6 +208,13 @@ gulp.task('tests', ['tests:unit'], function() {
 });
 
 
+gulp.task('test:integration', function() {
+  process.env.NODE_ENV = "test";
+  const mocha = require('gulp-mocha');
+  gulp.src('integration/**/*.js', {read: false})
+    .pipe(mocha({reporter: 'nyan'}));
+});
+
 gulp.task('test:e2e', ['test-server'], function () {
   var nightwatch = require('nightwatch');
   nightwatch.runner({

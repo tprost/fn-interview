@@ -1,23 +1,18 @@
-var models  = require('../models');
-var express = require('express');
-var router  = express.Router();
+var user = require('../controllers/user.controller.js');
+var authentication = require('../controllers/authentication.controller.js');
 
-router.post('/create', function(req, res) {
-  models.User.create({
-    username: req.body.username
-  }).then(function() {
-    res.redirect('/');
-  });
-});
+module.exports = function(app) {
+  app.post('/api/signup', authentication.signupWithUsernameAndPassword);
 
-router.get('/:user_id/destroy', function(req, res) {
-  models.User.destroy({
-    where: {
-      id: req.params.user_id
-    }
-  }).then(function() {
-    res.redirect('/');
-  });
-});
+  app.post('/api/login', authentication.loginWithUsernameAndPassword);
 
-module.exports = router;
+  app.route('/api/me')
+    .get(authentication.ensureAuthenticated, user.currentUser);
+
+  app.route('/api/me/profile')
+    .put(authentication.ensureAuthenticated, user.updateUser)
+    .delete(authentication.ensureAuthenticated, user.deleteAccount);
+
+  app.route('/api/me/password')
+    .put(authentication.ensureAuthenticated, user.updatePassword);
+};

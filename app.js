@@ -21,29 +21,26 @@ const njk = expressNunjucks(app, {
     noCache: isDev
 });
 
-var home = require('./app/routes/home');
-var users = require('./app/routes/users');
+require ('./app/middleware/authentication.js');
 
-// routes
-app.use('/', home);
-app.use('/users', users);
+require('./app/routes/home')(app);
+require('./app/routes/users')(app);
 
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
+function clientErrorHandler (err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: 'Something failed!' });
+  } else {
+    next(err);
+  }
+}
 
-// // error handler
-// // no stacktraces leaked to user unless in development environment
-// app.use(function(err, req, res, next) {
-//   res.status(err.status || 500);
-//   res.render('error', {
-//     message: err.message,
-//     error: (app.get('env') === 'development') ? err : {}
-//   });
-// });
+function errorHandler (err, req, res, next) {
+  res.status(500);
+  res.render('error', { error: err });
+}
+
+app.use(clientErrorHandler);
+app.use(errorHandler);
 
 var server = http.createServer(app);
 
@@ -51,4 +48,7 @@ server.listen(config.port, function(){
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
 });
 
+app.server = server;
+
 module.exports = app;
+

@@ -1,9 +1,7 @@
-var controller = require('../controllers/home.js');
+var home = require('../controllers/home.js');
 
-var express = require('express');
-var router  = express.Router();
+module.exports = function(app) {
+  app.route('/').get(home.home);
+  app.route('/index.html').get(home.home);
+};
 
-router.get('/', controller.home);
-router.get('/index.html', controller.home);
-
-module.exports = router;

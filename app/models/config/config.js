@@ -4,7 +4,8 @@ var _ = require('lodash');
 
 function requiredProcessEnv(name) {
   if(!process.env[name]) {
-    throw new Error('You must set the ' + name + ' environment variable');
+    console.warn('using `development` NODE_ENV');
+    return 'development';
   }
   return process.env[name];
 }
@@ -17,4 +18,4 @@ var all = {
 // ==============================================
 module.exports = _.merge(
   all,
-  require('./' + process.env.NODE_ENV + '.js') || {});
+  require('./' + all.env + '.js') || {});

@@ -4,17 +4,20 @@ var express = require('express');
 // var favicon = require('serve-favicon');
 // var morgan = require('morgan');
 // var compression = require('compression');
-// var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
 // var methodOverride = require('method-override');
 // var cookieParser = require('cookie-parser');
 // var errorHandler = require('errorhandler');
+var passport = require('passport');
 var path = require('path');
 var config = require('./index.js');
 
 module.exports = function(app) {
   // app.use(compression());
-  // app.use(bodyParser.urlencoded({ extended: false }));
-  // app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+  app.use(passport.initialize());
+  app.use(passport.session());
   // app.use(methodOverride());
   // app.use(cookieParser());
 
@@ -22,7 +25,7 @@ module.exports = function(app) {
 
   if ('production' === env || 'test' === env) {
     // app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
- app.use(express.static(path.join(config.root, 'dist')));
+    app.use(express.static(path.join(config.root, 'dist')));
 
   }
 
