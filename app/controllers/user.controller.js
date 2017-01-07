@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 var path = require('path');
-var request = require('request');
 var db = require('../models');
 
 exports.currentUser = function(req, res) {
