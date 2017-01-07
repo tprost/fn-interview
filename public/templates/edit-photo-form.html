@@ -1,0 +1,17 @@
+<div class="ui form">
+  <div class="ui field">
+    <label>URL</label>
+    <input type="input" ng-model="photo.url"></input>
+  </div>
+  <div class="ui field">
+    <label>Title</label>
+    <input type="input" ng-model="photo.title"></input>
+  </div>
+  <div class="ui field">
+    <div class="ui checkbox">
+      <input type="checkbox" ng-model="photo.public"></input>
+      <label>Public</label>
+    </div>
+  </div>
+  <button class="ui button" type="button" ng-click="controller.submit()">Update Photo</button>
+</div>

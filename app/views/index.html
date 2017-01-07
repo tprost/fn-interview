@@ -14,20 +14,22 @@
 
     {% if user %}
     <p>You're logged in!</p>
+
+    <div class="fn-new-photo-form"></div>
+    <div class="fn-my-photos"></div>
+
     <button class="ui button fn-logout-button">Logout</button>
     {% else %}
     <div class="ui modalad">
       <div class="fn-login-form"></div>
     </div>
-    {% endif %}
-
     {% for photo in photos %}
     <div class="ui card">
       <div class="ui header">{{photo.title}}</div>
       <img src="{{photo.url}}">
-
     </div>
     {% endfor %}
+    {% endif %}
 
 
     {% for path in js %}

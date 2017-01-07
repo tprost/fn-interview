@@ -45,7 +45,8 @@ gulp.task('nodemon', function(cb) {
     script: 'app.js',
     ignore: [
       'gulpfile.js',
-      'node_modules/'
+      'node_modules/',
+      'public'
     ],
     env: {
       'NODE_ENV': 'development'

@@ -3,7 +3,9 @@
 //During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
 
-var User = require('../app/models/index.js').User;
+var models = require('../app/models/index.js');
+var sequelize = models.sequelize;
+var User = sequelize.User;
 
 //Require the dev-dependencies
 var chai = require('chai');

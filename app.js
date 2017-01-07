@@ -23,6 +23,7 @@ const njk = expressNunjucks(app, {
 
 require('./app/routes/home')(app);
 require('./app/routes/users')(app);
+require('./app/routes/photos')(app);
 
 function clientErrorHandler (err, req, res, next) {
   if (req.xhr) {

@@ -11,13 +11,14 @@ passport.use(new LocalStrategy(
       }
       if (!user) {
         done(null, false, { message: 'Incorrect username.' });
+      } else {
+        user.comparePassword(password, function(error, isMatch) {
+          if (!isMatch) {
+            done(null, false, { message: 'Incorrect password.' });
+          }
+          done(null, user);
+        });
       }
-      user.comparePassword(password, function(error, isMatch) {
-        if (!isMatch) {
-          done(null, false, { message: 'Incorrect password.' });
-        }
-        done(null, user);
-      });
     });
   }
 ));
