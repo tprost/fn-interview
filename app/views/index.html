@@ -11,6 +11,7 @@
   <body ng-app="app">
 
     <p>testsets</p>
+
     {% if user %}
     <p>You're logged in!</p>
     <button class="ui button fn-logout-button">Logout</button>
@@ -19,6 +20,15 @@
       <div class="fn-login-form"></div>
     </div>
     {% endif %}
+
+    {% for photo in photos %}
+    <div class="ui card">
+      <div class="ui header">{{photo.title}}</div>
+      <img src="{{photo.url}}">
+
+    </div>
+    {% endfor %}
+
 
     {% for path in js %}
     <script type="text/javascript" src="{{ path }}"></script>

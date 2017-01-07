@@ -2,6 +2,8 @@
 
 var bcrypt = require('bcryptjs');
 
+var Photo = require('./photo.js');
+
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
     username: {
@@ -11,8 +13,8 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING
     },
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
     bio: DataTypes.TEXT
   }, {
     instanceMethods: {
@@ -48,9 +50,12 @@ module.exports = function(sequelize, DataTypes) {
     },
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+
       }
     }
   });
+
+
+
   return User;
 };

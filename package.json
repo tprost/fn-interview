@@ -6,6 +6,7 @@
     "postinstall": "sequelize db:migrate && bower install",
     "start": "node app.js",
     "migrate": "sequelize db:migrate",
+    "seed": "node app/models/seed.js",
     "test": "npm run test-unit && npm run test-integration",
     "test:unit": "cross-env NODE_ENV=test ./node_modules/.bin/mocha test/unit/*.test.js",
     "test:integration": "cross-env NODE_ENV=test ./node_modules/.bin/mocha test/integration/*.test.js",
