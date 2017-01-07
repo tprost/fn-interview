@@ -3,9 +3,7 @@
 var _ = require('lodash');
 var path = require('path');
 var request = require('request');
-
-var config = require('../models/config/config.js');
-var db = require('../models/index.js');
+var db = require('../models');
 
 exports.currentUser = function(req, res) {
   var user = req.user;

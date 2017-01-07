@@ -4,14 +4,13 @@ var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
 
-var config = require("./config/config.js");
-
+var config = require("../../config");
 
 if (process.env.DATABASE_URL) {
   console.log(process.env.DATABASE_URL);
   var sequelize = new Sequelize(process.env.DATABASE_URL);
 } else {
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+  var sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, config.db);
 }
 
 var db = {};
