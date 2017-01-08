@@ -5,8 +5,25 @@ module.exports = {
 
   // External before hook is ran at the beginning of the tests run, before creating the Selenium session
   before: function(done) {
+    process.env.NODE_ENV = 'test';
     app = require('../../../app.js');
-    done();
+
+    var models = require('../../../app/models/index.js');
+    var Photo = models.Photo;
+    var User = models.User;
+
+    Photo.drop().then(function() {
+      return User.drop();
+    }).then(function() {
+      return models.sequelize.sync();
+    }).then(function() {
+      return User.create({
+        username: "bob",
+        password: "password"
+      });
+    }).then(function() {
+      done();
+    });
   },
 
   // External after hook is ran at the very end of the tests run, after closing the Selenium session
