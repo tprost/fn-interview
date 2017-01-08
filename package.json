@@ -11,7 +11,7 @@
     "test:unit": "npm run test:backend:unit && npm run test:frontend:unit",
     "test:backend:unit": "cross-env NODE_ENV=test mocha app/**/*.spec.js",
     "test:frontend:unit": "karma start --single-run",
-    "test:integration": "cross-env NODE_ENV=test mocha tests/integration/**/*.js",
+    "test:integration": "cross-env NODE_ENV=test mocha tests/integration --opts tests/integration/mocha.opts",
     "test:e2e": "cross-env NODE_ENV=test nightwatch --config config/tests/e2e/nightwatch.conf.js"
   },
   "dependencies": {

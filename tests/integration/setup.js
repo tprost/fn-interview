@@ -1,17 +1,14 @@
 'use strict';
 
-var models = require('../../app/models/index.js');
+var models = global.models;
+var app = global.app;
 var User = models.User;
 var Photo = models.Photo;
+
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 
-var app;
-
 before(function(done) {
-  //During the test the env variable is set to test
-  process.env.NODE_ENV = 'test';
-  app = require('../../app');
   chai.use(chaiHttp);
   models.sequelize.sync().then(function() {
     done();
@@ -19,16 +16,20 @@ before(function(done) {
 });
 
 beforeEach(function(done) {
-  User.destroy({
-    where: {
-      // all
-    }
+  Photo.drop().then(function() {
+    return User.drop();
   }).then(function() {
-    return User.create({
-      username: "bob",
-      password: "password"
-    });
-  }).then(function (user) {
+    return models.sequelize.sync();
+  }).then(function() {
+    done();
+  });
+});
+
+beforeEach(function(done) {
+  User.create({
+    username: "bob",
+    password: "password"
+  }).then(function() {
     done();
   });
 });
