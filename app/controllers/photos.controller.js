@@ -7,7 +7,10 @@ exports.publicPhotos = function(req, res) {
   Photo.findAll({
     where: {
       public: true
-    }
+    },
+    order: [
+      ['createdAt', 'DESC']
+    ]
   }).then(function(photos) {
     res.json({
       photos: photos
