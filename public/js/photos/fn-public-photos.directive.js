@@ -7,7 +7,7 @@ angular.module('app').directive('fnPublicPhotos', function() {
   return {
     restrict: 'C',
     scope: true,
-    controller: "PhotosController",
+    controller: "PublicPhotosListController",
     templateUrl: '/templates/public-photos.html',
     link: postLink
   };

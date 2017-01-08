@@ -1,5 +1,5 @@
 <div class="ui cards">
-  <div class="card" ng-repeat="photo in photos">
+  <div class="card" ng-repeat="photo in page.photos">
     <a ng-href="{{photo.url}}" class="image">
       <img src="{{photo.url}}" alt="{{photo.url}}">
     </a>
@@ -11,3 +11,6 @@
     </div>
   </div>
 </div>
+<a href="#" ng-hide="page.first" ng-click="controller.previousPage()">Previous</a>
+<a href="#" ng-hide="page.last" ng-click="controller.nextPage()">Next</a>
+
