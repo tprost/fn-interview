@@ -1,37 +1,22 @@
 'use strict';
 
-//During the test the env variable is set to test
-process.env.NODE_ENV = 'test';
 
-var User = require('../app/models/index.js').User;
-var Photo = require('../app/models/index.js').Photo;
+var models = require('../../app/models/index.js');
+var User = models.User;
+var Photo = models.Photo;
+
+var app = require('../../app');
 
 //Require the dev-dependencies
 var chai = require('chai');
-let chaiHttp = require('chai-http');
-let app = require('../app');
-let expect = chai.expect;
-
-chai.use(chaiHttp);
+var chaiHttp = require('chai-http');
+var expect = chai.expect;
 
 //Our parent block
 describe('Authentication', function() {
-  beforeEach(function(done) {
-    User.destroy({
-      where: {
-        // all
-      }
-    }).then(function() {
-      return User.create({
-        username: "bob",
-        password: "password"
-      });
-    }).then(function (user) {
-      done();
-    });
-  });
 
   var agent;
+
   beforeEach(function(done) {
     agent = chai.request.agent(app);
     agent
@@ -61,8 +46,4 @@ describe('Authentication', function() {
     });
   });
 
-
-  after(function() {
-    app.server.close();
-  });
 });

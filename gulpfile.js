@@ -74,27 +74,6 @@ gulp.task('browser-sync', ['nodemon'], function () {
   });
 });
 
-gulp.task('test-server', function() {
-  server.listen({
-    path: './app.js',
-    env: {
-      PORT: 5678,
-      NODE_ENV: 'test',
-      SEED: 'seed'
-    }
-  });
-});
-
-gulp.task('prod-test-server', function() {
-  server.listen({
-    path: './app.js',
-    env: {
-      NODE_ENV: 'production',
-      SEED: 'seed'
-    }
-  });
-});
-
 gulp.task('serve', ['watch'], function () {
   gulp.start('browser-sync');
 });
@@ -139,15 +118,9 @@ gulp.task('watch', ['inject'], function () {
   });
 });
 
-gulp.task('default', function() {
+gulp.task('default', ['serve'], function() {
 
 });
-
-// gulp.task('inject', function(){});
-// // gulp.task('default', ['clean'], function () {
-// //   gulp.start('build');
-// // });
-//
 
 gulp.task('inject', [], function () {
 
@@ -157,76 +130,5 @@ gulp.task('inject', [], function () {
   gulp.src(path.join(conf.paths.src, '/templates/**/*.html'))
     .pipe(gulp.dest(path.join(conf.paths.dist, '/templates')));
 
-  // gulp.src(path.join(conf.paths.src, '/js/**/*.js'))
-  //   .pipe(gulp.dest(path.join(conf.paths.dist, '/js')));
-
-  // var injectStyles = gulp.src([
-  //   path.join(conf.paths.src, '/assets/css/*.css')
-  // ], { read: false });
-
-  // var injectScripts = gulp.src([
-  //   path.join(conf.paths.src, '/app/**/*.module.js'),
-  //   path.join(conf.paths.src, '/app/**/*.js'),
-  //   path.join('!' + conf.paths.src, '/app/**/*.spec.js'),
-  //   path.join('!' + conf.paths.src, '/app/**/*.mock.js')
-  // ])
-  // .pipe($.angularFilesort()).on('error', conf.errorHandler('AngularFilesort'));
-
-  // var injectOptions = {
-  //   ignorePath: [conf.paths.src, path.join(conf.paths.tmp, '/serve')],
-  //   addRootSlash: false
-  // };
-
-  // return gulp.src(path.join(conf.paths.src, '/*.html'))
-  //   .pipe($.inject(injectStyles, injectOptions))
-  //   .pipe($.inject(injectScripts, injectOptions))
-  //   .pipe(wiredep(_.extend({}, conf.wiredep)))
-  //   .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve')));
 });
 
-gulp.task('tests:unit:backend', function() {
-  process.env.NODE_ENV = "test";
-  const mocha = require('gulp-mocha');
-  gulp.src('app/**/*.spec.js', {read: false})
-    .pipe(mocha({reporter: 'nyan'}));
-});
-
-gulp.task('tests:unit:frontend', function(done) {
-  var Server = require('karma').Server;
-  new Server({
-    configFile: __dirname + '/karma.conf.js',
-    singleRun: true
-  }, done).start();
-});
-
-gulp.task('tests:unit', ['tests:unit:backend', 'tests:unit:frontend'], function() {
-
-
-});
-
-gulp.task('tests', ['tests:unit'], function() {
-
-});
-
-
-gulp.task('test:integration', function() {
-  process.env.NODE_ENV = "test";
-  const mocha = require('gulp-mocha');
-  gulp.src('integration/**/*.js', {read: false})
-    .pipe(mocha({reporter: 'nyan'}));
-});
-
-gulp.task('test:e2e', ['test-server'], function () {
-  var nightwatch = require('nightwatch');
-  nightwatch.runner({
-    config: 'nightwatch.json',
-    env: 'default'
-  }, function (passed) {
-    if (passed) {
-      process.exit();
-    }
-    else {
-      process.exit(1);
-    }
-  });
-});

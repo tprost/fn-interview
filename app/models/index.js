@@ -7,7 +7,6 @@ var Sequelize = require("sequelize");
 var config = require("../../config");
 
 if (process.env.DATABASE_URL) {
-  console.log(process.env.DATABASE_URL);
   var sequelize = new Sequelize(process.env.DATABASE_URL);
 } else {
   var sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, config.db);
