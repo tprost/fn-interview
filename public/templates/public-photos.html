@@ -6,7 +6,8 @@
     <div class="content">
       <a ng-href="photo.url" class="header" ng-bind="photo.title"></a>
       <div class="meta">
-        Photo added on <span class="date" ng-bind="photo.createdAt | date:'short'"></span>
+        <p>Photo added on <span class="date" ng-bind="photo.createdAt | date:'short'"></span></p>
+        <p>Added by <strong ng-bind="photo.user.username"></strong></p>
       </div>
     </div>
   </div>

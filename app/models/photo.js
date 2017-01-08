@@ -11,7 +11,8 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         Photo.belongsTo(models.User, {
-          foreignKey: 'userId'
+          foreignKey: 'userId',
+          as: 'user'
         });
       }
     }

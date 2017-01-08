@@ -10,7 +10,11 @@ exports.publicPhotos = function(req, res) {
     },
     order: [
       ['createdAt', 'DESC']
-    ]
+    ],
+    include: [{
+      model: db.User,
+      as: 'user'
+    }]
   }).then(function(photos) {
     res.json({
       photos: photos
