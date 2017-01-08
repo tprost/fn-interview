@@ -7,7 +7,7 @@ angular.module('app').controller('LoginFormController', function($scope, $window
   this.submit = function() {
 
     return auth.login($scope.credentials).then(function() {
-      $window.location.href = '/';
+      $window.location.href = $window.location.href;
     });
   };
 

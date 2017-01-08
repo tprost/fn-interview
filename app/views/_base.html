@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>Photo App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/lib/semantic/dist/semantic.css">
+    <link rel="stylesheet" href="/css/stylesheet.css">
+  </head>
+
+  <body>
+    <div class="ui container">
+      <h1 class="ui header large">Photo App!</h1>
+
+      {% include "_nav.html" %}
+
+
+      {% block main %}
+      <main>
+      </main>
+      {% endblock %}
+    </div>
+  </body>
+
+  {% for path in js %}
+  <script type="text/javascript" src="{{ path }}"></script>
+  {% endfor %}
+</html>

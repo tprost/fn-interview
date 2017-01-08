@@ -35,8 +35,7 @@ describe('home controller', function() {
     });
 
     response.on('render', function() {
-      expect(response._getRenderView()).to.equal("index");
-      expect(response._getRenderData().title).to.equal("blah");
+      expect(response._getRenderView()).to.equal("public-home");
       done();
     });
 

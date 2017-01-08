@@ -1,0 +1,13 @@
+<div class="ui cards">
+  <div class="card" ng-repeat="photo in photos">
+    <a ng-href="{{photo.url}}" class="image">
+      <img src="{{photo.url}}" alt="{{photo.url}}">
+    </a>
+    <div class="content">
+      <a ng-href="photo.url" class="header" ng-bind="photo.title"></a>
+      <div class="meta">
+        Photo added on <span class="date" ng-bind="photo.createdAt | date:'short'"></span>
+      </div>
+    </div>
+  </div>
+</div>
